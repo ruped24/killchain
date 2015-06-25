@@ -8,3 +8,10 @@ Exploit
 Installation
 Command & Control
 Actions
+
+Dependant tool sets are:
+
+1)  Set -- Social-Engineer Toolkit (SET), attacks against humans.
+2)  OpenVas --  Vulnerability scanning and vulnerability management.
+3)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.
+4)  Websploit -- WebSploit Advanced MITM Framework.
