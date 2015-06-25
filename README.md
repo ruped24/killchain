@@ -1,2 +1,9 @@
 # killchain
-A unified console to perform the "kill chain" stages of attacks
+“Kill Chain” is a unified console that will perform these stages of attacks:
+[*]Reconnaissance
+[*]Weaponization
+[*]Delivery
+[*]Exploit
+[*]Installation
+[*]Command & Control
+[*]Actions
