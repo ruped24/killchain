@@ -34,7 +34,7 @@ def who_did_it():
 tools = {
     1: "setoolkit",
     2: "openvas-setup",
-    3: "Veil-Evasion.py",
+    3: "veil-evasion",
     4: "websploit"
 }
 
