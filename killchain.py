@@ -22,13 +22,13 @@ Lyel = "[93m"
 
 
 def who_did_it():
-    print("        {}".format("#" * 64))
-    print("        {}".format("Created by: %s." % __copyright__))
-    print("        {}".format("For training purposes only."))
-    print("        {}".format("Version %s, License %s" %
+    print("        {0}".format("#" * 64))
+    print("        {0}".format("Created by: %s." % __copyright__))
+    print("        {0}".format("For training purposes only."))
+    print("        {0}".format("Version %s, License %s" %
                               (__version__, __license__)))
-    print("        {}".format("Written by: %s" % __author__))
-    print("        {}".format("#" * 64 + "\n\n"))
+    print("        {0}".format("Written by: %s" % __author__))
+    print("        {0}".format("#" * 64 + "\n\n"))
 
 
 tools = {
