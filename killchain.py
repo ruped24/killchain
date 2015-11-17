@@ -83,6 +83,10 @@ class Header:
 
 if __name__ == '__main__':
     try:
+        raw_input
+    except NameError:
+        raw_input = input
+    try:
         while True:
             stderr.write("\x1b[2J\x1b[H")
             call(['reset'])
