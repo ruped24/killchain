@@ -40,16 +40,16 @@ tools = {
 
 
 def main_menu():
-    print("        {}".format(
+    print("        {0}".format(
         Escape + Lyel +
         "1)  Set -- Social-Engineer Toolkit (SET), attacks against humans.\n"))
-    print("        {}".format(
+    print("        {0}".format(
         "2)  OpenVas --  Vulnerability scanning and vulnerability management.\n"))
-    print("        {}".format(
+    print("        {0}".format(
         "3)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.\n"))
-    print("        {}".format(
+    print("        {0}".format(
         "4)  Websploit -- WebSploit Advanced MITM Framework.\n"))
-    print("        {}".format(Escape + Lred + "5)  Exit Kill Chain\n"))
+    print("        {0}".format(Escape + Lred + "5)  Exit Kill Chain\n"))
 
 
 class Header:
