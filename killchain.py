@@ -23,36 +23,14 @@ Lgre = "[92m"
 Lyel = "[93m"
 
 
-def who_did_it():
-  print("        {0}".format("#" * 64))
-  print("        {0}".format("Created by: %s." % __copyright__))
-  print("        {0}".format("For training purposes only."))
-  print("        {0}, {1}".format("Version %s" % __version__,
-                                  "License %s" % __license__))
-  print("        {0}".format("Written by: %s" % __author__))
-  print("        {0}".format("#" * 64 + "\n\n"))
-
-
-tools = {
-    'helper': 'which',
-    1: "setoolkit",
-    2: "openvas-setup",
-    3: "veil-evasion",
-    4: "websploit"
-}
-
-
-def main_menu():
-  print("        {0}".format(
-      Escape + Lyel +
-      "1)  Set -- Social-Engineer Toolkit (SET), attacks against humans.\n"))
-  print("        {0}".format(
-      "2)  OpenVas --  Vulnerability scanning and vulnerability management.\n"))
-  print("        {0}".format(
-      "3)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.\n"))
-  print("        {0}".format(
-      "4)  Websploit -- WebSploit Advanced MITM Framework.\n"))
-  print("        {0}".format(Escape + Lred + "5)  Exit Kill Chain\n"))
+class Tools:
+  tool = {
+      'helper': 'which',
+      1: "setoolkit",
+      2: "openvas-setup",
+      3: "veil-evasion",
+      4: "websploit"
+  }
 
 
 class Header:
@@ -84,6 +62,29 @@ class Header:
   }
 
 
+def who_did_it():
+  print("        {0}".format("#" * 64))
+  print("        {0}".format("Created by: %s." % __copyright__))
+  print("        {0}".format("For training purposes only."))
+  print("        {0}, {1}".format("Version %s" % __version__,
+                                  "License %s" % __license__))
+  print("        {0}".format("Written by: %s" % __author__))
+  print("        {0}".format("#" * 64 + "\n\n"))
+
+
+def main_menu():
+  print("        {0}".format(
+      Escape + Lyel +
+      "1)  Set -- Social-Engineer Toolkit (SET), attacks against humans.\n"))
+  print("        {0}".format(
+      "2)  OpenVas --  Vulnerability scanning and vulnerability management.\n"))
+  print("        {0}".format(
+      "3)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.\n"))
+  print("        {0}".format(
+      "4)  Websploit -- WebSploit Advanced MITM Framework.\n"))
+  print("        {0}".format(Escape + Lred + "5)  Exit Kill Chain\n"))
+
+
 if __name__ == '__main__':
   try:
     raw_input
@@ -98,6 +99,7 @@ if __name__ == '__main__':
         who_did_it()
         main_menu()
         try:
+          tool = Tools().tool
           selected = int(raw_input(Escape + Lgre + gethostname() + "-gOtr00t"
                                    ":> "))
           if selected < 1 or selected > 5:
@@ -106,16 +108,16 @@ if __name__ == '__main__':
           if selected is 5:
             exit(0)
           if selected is 1:
-            call([getoutput(tools['helper'] + ' ' + tools[1])])
+            call([getoutput(tool['helper'] + ' ' + tool[1])])
             sleep(1)
           if selected is 2:
-            call([getoutput(tools['helper'] + ' ' + tools[2])])
+            call([getoutput(tool['helper'] + ' ' + tool[2])])
             sleep(1)
           if selected is 3:
-            call([getoutput(tools['helper'] + ' ' + tools[3])])
+            call([getoutput(tool['helper'] + ' ' + tool[3])])
             sleep(1)
           if selected is 4:
-            call([getoutput(tools['helper'] + ' ' + tools[4])])
+            call([getoutput(tool['helper'] + ' ' + tool[4])])
             sleep(1)
         except ValueError:
           print("Select a number between 1 and 5")
@@ -125,7 +127,7 @@ if __name__ == '__main__':
   except OSError as err:
     print("\n [*] Check your path " + Escape + Lred + "%s\n %s" %
           (environ['PATH'], "[!] " + Escape + Lyel + "Can't find"),
-          Escape + Lgre + tools[selected] + ", " + err[1],
+          Escape + Lgre + tool[selected] + ", " + err[1],
           Escape + Lred + "Aborting!")
     sleep(2)
     pass
