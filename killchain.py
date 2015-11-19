@@ -7,6 +7,7 @@ from socket import gethostname
 from sys import exit, stderr
 from subprocess import call
 from time import sleep
+from os import environ
 
 __author__ = "Rupe"
 __date__ = "June 14 2015"
@@ -115,6 +116,7 @@ if __name__ == '__main__':
       except SystemExit:
         exit(0)
   except Exception as err:
-    print("\nCheck your path, %s.\n" % err)
+    print("\n Check your path %s\n\n %s\n" %
+          (environ['PATH'], err), tools[selected])
     sleep(2)
     pass
