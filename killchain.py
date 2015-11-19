@@ -27,7 +27,7 @@ def who_did_it():
   print("        {0}".format("#" * 64))
   print("        {0}".format("Created by: %s." % __copyright__))
   print("        {0}".format("For training purposes only."))
-  print("        {0}, {1}".format("Version %s" % __version__, 
+  print("        {0}, {1}".format("Version %s" % __version__,
                                   "License %s" % __license__))
   print("        {0}".format("Written by: %s" % __author__))
   print("        {0}".format("#" * 64 + "\n\n"))
@@ -124,7 +124,7 @@ if __name__ == '__main__':
         exit(0)
   except OSError:
     print("\n Check your path " + Escape + Lred + "%s\n\n %s" %
-          (environ['PATH'], "6) " + Escape + Lyel + "Can't find"),
-          Escape + Lgre + tools[selected] + ",", "Aborting!")
+          (environ['PATH'], "[!] " + Escape + Lyel + "Can't find"),
+          Escape + Lgre + tools[selected] + ",", Escape + Lred + "Aborting!")
     sleep(2)
     pass
