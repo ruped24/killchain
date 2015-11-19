@@ -56,11 +56,11 @@ class Header:
 
 class Tools:
   tool = {
-    'helper': 'which',
-    1: "setoolkit",
-    2: "openvas-setup",
-    3: "veil-evasion",
-    4: "websploit"
+      'helper': 'which',
+      1: "setoolkit",
+      2: "openvas-setup",
+      3: "veil-evasion",
+      4: "websploit"
   }
 
 
@@ -97,14 +97,15 @@ if __name__ == '__main__':
       stderr.write("\x1b[2J\x1b[H")
       call(['reset'])
       try:
-        print(Header().headers[randint(1, 3)] + "\n\n")
         c = Colors()
+        print(c.Escape + "[" + repr(randint(92, 93)) + "m" +
+              Header().headers[randint(1, 3)] + "\n\n")
         who_did_it()
         main_menu()
         try:
           tool = Tools().tool
           selected = int(
-            raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
+              raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
                         ":> "))
           if selected < 1 or selected > 5:
             print("Select a number between 1 and 5")
