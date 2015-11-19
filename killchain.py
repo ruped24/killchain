@@ -104,7 +104,7 @@ if __name__ == '__main__':
         try:
           tool = Tools().tool
           selected = int(
-              raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
+            raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
                         ":> "))
           if selected < 1 or selected > 5:
             print("Select a number between 1 and 5")
