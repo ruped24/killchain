@@ -103,18 +103,18 @@ if __name__ == '__main__':
           if selected < 1 or selected > 5:
             print("Select a number between 1 and 5")
             sleep(2)
-          if selected == 5:
+          if selected is 5:
             exit(0)
-          if selected == 1:
+          if selected is 1:
             call([getoutput(tools['helper'] + ' ' + tools[1])])
             sleep(1)
-          if selected == 2:
+          if selected is 2:
             call([getoutput(tools['helper'] + ' ' + tools[2])])
             sleep(1)
-          if selected == 3:
+          if selected is 3:
             call([getoutput(tools['helper'] + ' ' + tools[3])])
             sleep(1)
-          if selected == 4:
+          if selected is 4:
             call([getoutput(tools['helper'] + ' ' + tools[4])])
             sleep(1)
         except ValueError:
