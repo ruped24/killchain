@@ -17,20 +17,12 @@ __version__ = "0.2"
 __license__ = "GPL"
 __email__ = "ruped24@gmail.com"
 
-Escape = "\033"
-Lred = "[91m"
-Lgre = "[92m"
-Lyel = "[93m"
 
-
-class Tools:
-  tool = {
-      'helper': 'which',
-      1: "setoolkit",
-      2: "openvas-setup",
-      3: "veil-evasion",
-      4: "websploit"
-  }
+class Colors:
+  Escape = "\033"
+  Lred = "[91m"
+  Lgre = "[92m"
+  Lyel = "[93m"
 
 
 class Header:
@@ -62,6 +54,16 @@ class Header:
   }
 
 
+class Tools:
+  tool = {
+      'helper': 'which',
+      1: "setoolkit",
+      2: "openvas-setup",
+      3: "veil-evasion",
+      4: "websploit"
+  }
+
+
 def who_did_it():
   print("        {0}".format("#" * 64))
   print("        {0}".format("Created by: %s." % __copyright__))
@@ -74,7 +76,7 @@ def who_did_it():
 
 def main_menu():
   print("        {0}".format(
-      Escape + Lyel +
+      c.Escape + c.Lyel +
       "1)  Set -- Social-Engineer Toolkit (SET), attacks against humans.\n"))
   print("        {0}".format(
       "2)  OpenVas --  Vulnerability scanning and vulnerability management.\n"))
@@ -82,7 +84,7 @@ def main_menu():
       "3)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.\n"))
   print("        {0}".format(
       "4)  Websploit -- WebSploit Advanced MITM Framework.\n"))
-  print("        {0}".format(Escape + Lred + "5)  Exit Kill Chain\n"))
+  print("        {0}".format(c.Escape + c.Lred + "5)  Exit Kill Chain\n"))
 
 
 if __name__ == '__main__':
@@ -95,13 +97,15 @@ if __name__ == '__main__':
       stderr.write("\x1b[2J\x1b[H")
       call(['reset'])
       try:
+        c = Colors()
         print(Header().headers[randint(1, 3)] + "\n\n")
         who_did_it()
         main_menu()
         try:
           tool = Tools().tool
-          selected = int(raw_input(Escape + Lgre + gethostname() + "-gOtr00t"
-                                   ":> "))
+          selected = int(
+              raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
+                        ":> "))
           if selected < 1 or selected > 5:
             print("Select a number between 1 and 5")
             sleep(2)
@@ -125,9 +129,9 @@ if __name__ == '__main__':
       except SystemExit:
         exit(0)
   except OSError as err:
-    print("\n [*] Check your path " + Escape + Lred + "%s\n %s" %
-          (environ['PATH'], "[!] " + Escape + Lyel + "Can't find"),
-          Escape + Lgre + tool[selected] + ", " + err[1],
-          Escape + Lred + "Aborting!")
+    print("\n [*] Check your path " + c.Escape + c.Lred + "%s\n %s" %
+          (environ['PATH'], "[!] " + c.Escape + c.Lyel + "Can't find"),
+          c.Escape + c.Lgre + tool[selected] + ", " + err[1],
+          c.Escape + c.Lred + "Aborting!")
     sleep(2)
     pass
