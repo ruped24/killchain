@@ -56,11 +56,11 @@ class Header:
 
 class Tools:
   tool = {
-      'helper': 'which',
-      1: "setoolkit",
-      2: "openvas-setup",
-      3: "veil-evasion",
-      4: "websploit"
+    'helper': 'which',
+    1: "setoolkit",
+    2: "openvas-setup",
+    3: "veil-evasion",
+    4: "websploit"
   }
 
 
