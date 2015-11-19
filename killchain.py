@@ -2,6 +2,7 @@
 #
 
 from __future__ import print_function
+from __future__ import absolute_import
 from random import randint
 from socket import gethostname
 from sys import exit, stderr
@@ -9,6 +10,10 @@ from commands import getoutput
 from subprocess import call
 from time import sleep
 from os import environ
+from os.path import isfile
+from os import devnull
+
+fnull = open(devnull, 'w')
 
 __author__ = "Rupe"
 __date__ = "June 14 2015"
@@ -57,11 +62,60 @@ class Header:
 class Tools:
   tool = {
       'helper': 'which',
-      1: "setoolkit",
-      2: "openvas-setup",
-      3: "veil-evasion",
-      4: "websploit"
+      3: "setoolkit",
+      4: "openvas-setup",
+      5: "veil-evasion",
+      6: "websploit"
   }
+
+
+class TorIptables(object):
+
+  def __init__(self):
+    self.tor_config_file = '/etc/tor/torrc'
+    self.torrc = '''
+VirtualAddrNetwork 10.0.0.0/10
+AutomapHostsOnResolve 1
+TransPort 9040
+DNSPort 53
+'''
+    self.non_tor_net = ["192.168.0.0/16", "172.16.0.0/12"]
+    self.non_tor = ["127.0.0.0/9", "127.128.0.0/10", "127.0.0.0/8"]
+    self.tor_uid = getoutput("id -ur debian-tor")  # Tor user uid
+    self.trans_port = "9040"  # Tor port
+
+  def flush_iptables_rules(self):
+    call(["iptables", '-F'])
+    call(["iptables", "-t", "nat", "-F"])
+
+  def load_iptables_rules(self):
+    self.flush_iptables_rules()
+    self.non_tor.extend(self.non_tor_net)
+
+    call(["iptables", "-t", "nat", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
+          "%s" % self.tor_uid, "-j", "RETURN"])
+    call(["iptables", "-t", "nat", "-A", "OUTPUT", "-p", "udp", "--dport", "53",
+          "-j", "REDIRECT", "--to-ports", "53"])
+
+    for self.net in self.non_tor:
+      call(["iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % self.net,
+            "-j", "RETURN"])
+
+    call(["iptables", "-t", "nat", "-A", "OUTPUT", "-p", "tcp", "--syn", "-j",
+          "REDIRECT", "--to-ports", "%s" % self.trans_port])
+
+    call(["iptables", "-A", "OUTPUT", "-m", "state", "--state",
+          "ESTABLISHED,RELATED", "-j", "ACCEPT"])
+
+    for self.net in (self.non_tor):
+      call(["iptables", "-A", "OUTPUT", "-d", "%s" % self.net, "-j", "ACCEPT"])
+
+    call(["iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner", "%s" %
+          self.tor_uid, "-j", "ACCEPT"])
+    call(["iptables", "-A", "OUTPUT", "-j", "REJECT"])
+
+    # Restart Tor
+    call(["service", "tor", "restart"], stderr=fnull)
 
 
 def who_did_it():
@@ -74,20 +128,35 @@ def who_did_it():
   print("        {0}".format("#" * 64 + "\n\n"))
 
 
+def anon_status():
+  anon = getoutput("iptables -S -t nat | grep 53")
+  if anon:
+    print("        {0} {1}".format("Anonymizer status",
+                                   c.Escape + c.Lgre + "[ON]\n"))
+  else:
+    print("        {0} {1}".format("Anonymizer status",
+                                   c.Escape + c.Lred + "[OFF]\n"))
+
+
 def main_menu():
   print("        {0}".format(
       c.Escape + c.Lyel +
-      "1)  Set -- Social-Engineer Toolkit (SET), attacks against humans.\n"))
+      "1)  Anonymizer -- Load Tor Iptables rules, route all traffic thru Tor.\n"))
   print("        {0}".format(
-      "2)  OpenVas --  Vulnerability scanning and vulnerability management.\n"))
+      "2)  Anonymizer -- Flush Tor Iptables rules set to default rules.\n"))
   print("        {0}".format(
-      "3)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.\n"))
+      "3)  Set -- Social-Engineer Toolkit (SET), attacks against humans.\n"))
   print("        {0}".format(
-      "4)  Websploit -- WebSploit Advanced MITM Framework.\n"))
-  print("        {0}".format(c.Escape + c.Lred + "5)  Exit Kill Chain\n"))
+      "4)  OpenVas --  Vulnerability scanning and vulnerability management.\n"))
+  print("        {0}".format(
+      "5)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.\n"))
+  print("        {0}".format(
+      "6)  Websploit -- WebSploit Advanced MITM Framework.\n"))
+  print("        {0}".format(c.Escape + c.Lred + "7)  Exit Kill Chain\n"))
 
 
 if __name__ == '__main__':
+  load_tables = TorIptables()
   try:
     raw_input
   except NameError:
@@ -101,22 +170,29 @@ if __name__ == '__main__':
         print(c.Escape + "[" + repr(randint(92, 93)) + "m" +
               Header().headers[randint(1, 3)] + "\n\n")
         who_did_it()
+        anon_status()
         main_menu()
         try:
           tool = Tools().tool
           selected = int(
               raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
                         ":> "))
-          if selected < 1 or selected > 5:
-            print("Select a number between 1 and 5")
+          if selected < 1 or selected > 7:
+            print("Select a number between 1 and 6")
             sleep(2)
-          if selected is 5:
+          if selected is 7:
             exit(0)
           if selected is 1:
-            call([getoutput(tool['helper'] + ' ' + tool[1])])
-            sleep(1)
+            if isfile(load_tables.tor_config_file):
+              if not 'VirtualAddrNetwork' in open(
+                  load_tables.tor_config_file).read():
+                with open(load_tables.tor_config_file, 'a+') as torrconf:
+                  torrconf.write(load_tables.torrc)
+            load_tables.load_iptables_rules()
+          sleep(1)
+
           if selected is 2:
-            call([getoutput(tool['helper'] + ' ' + tool[2])])
+            load_tables.flush_iptables_rules()
             sleep(1)
           if selected is 3:
             call([getoutput(tool['helper'] + ' ' + tool[3])])
@@ -124,8 +200,14 @@ if __name__ == '__main__':
           if selected is 4:
             call([getoutput(tool['helper'] + ' ' + tool[4])])
             sleep(1)
+          if selected is 5:
+            call([getoutput(tool['helper'] + ' ' + tool[5])])
+            sleep(1)
+          if selected is 6:
+            call([getoutput(tool['helper'] + ' ' + tool[6])])
+            sleep(1)
         except ValueError:
-          print("Select a number between 1 and 5")
+          print("Select a number between 1 and 6")
           sleep(2)
       except SystemExit:
         exit(0)
