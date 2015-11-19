@@ -97,8 +97,8 @@ if __name__ == '__main__':
       stderr.write("\x1b[2J\x1b[H")
       call(['reset'])
       try:
-        c = Colors()
         print(Header().headers[randint(1, 3)] + "\n\n")
+        c = Colors()
         who_did_it()
         main_menu()
         try:
