@@ -5,6 +5,7 @@ from __future__ import print_function
 from random import randint
 from socket import gethostname
 from sys import exit, stderr
+from commands import getoutput
 from subprocess import call
 from time import sleep
 from os import environ
@@ -32,7 +33,13 @@ def who_did_it():
   print("        {0}".format("#" * 64 + "\n\n"))
 
 
-tools = {1: "setoolkit", 2: "openvas-setup", 3: "veil-evasion", 4: "websploit"}
+tools = {
+    'helper': 'which',
+    1: "setoolkit",
+    2: "openvas-setup",
+    3: "veil-evasion",
+    4: "websploit"
+}
 
 
 def main_menu():
@@ -99,25 +106,25 @@ if __name__ == '__main__':
           if selected == 5:
             exit(0)
           if selected == 1:
-            call([tools[1]])
+            call([getoutput(tools['helper'] + ' ' + tools[1])])
             sleep(1)
           if selected == 2:
-            call([tools[2]])
+            call([getoutput(tools['helper'] + ' ' + tools[2])])
             sleep(1)
           if selected == 3:
-            call([tools[3]])
+            call([getoutput(tools['helper'] + ' ' + tools[3])])
             sleep(1)
           if selected == 4:
-            call([tools[4]])
+            call([getoutput(tools['helper'] + ' ' + tools[4])])
             sleep(1)
         except ValueError:
           print("Select a number between 1 and 5")
           sleep(2)
       except SystemExit:
         exit(0)
-  except Exception as err:
-    print("\n Check your path " + Escape + Lred + "%s\n\n %s!" %
-          (environ['PATH'], "6) " + Escape + Lyel + err[1]),
+  except OSError:
+    print("\n Check your path " + Escape + Lred + "%s\n\n %s" %
+          (environ['PATH'], "6) " + Escape + Lyel + "Can't find"),
           Escape + Lgre + tools[selected] + ",", "Aborting!")
     sleep(2)
     pass
