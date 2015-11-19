@@ -123,7 +123,7 @@ if __name__ == '__main__':
       except SystemExit:
         exit(0)
   except OSError:
-    print("\n Check your path " + Escape + Lred + "%s\n\n %s" %
+    print("\n [*] Check your path " + Escape + Lred + "%s\n %s" %
           (environ['PATH'], "[!] " + Escape + Lyel + "Can't find"),
           Escape + Lgre + tools[selected] + ",", Escape + Lred + "Aborting!")
     sleep(2)
