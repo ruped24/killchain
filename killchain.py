@@ -116,7 +116,8 @@ if __name__ == '__main__':
       except SystemExit:
         exit(0)
   except Exception as err:
-    print("\n Check your path %s\n\n %s!" %
-          (environ['PATH'], err[1]), tools[selected])
+    print("\n Check your path " + Escape + Lred + "%s\n\n %s!" %
+          (environ['PATH'], Escape + Lyel + err[1]),
+          Escape + Lgre + tools[selected] + ".")
     sleep(2)
     pass
