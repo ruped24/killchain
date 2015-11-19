@@ -118,6 +118,6 @@ if __name__ == '__main__':
   except Exception as err:
     print("\n Check your path " + Escape + Lred + "%s\n\n %s!" %
           (environ['PATH'], "6) " + Escape + Lyel + err[1]),
-          Escape + Lgre + tools[selected] + ".")
+          Escape + Lgre + tools[selected] + ",", "Aborting!")
     sleep(2)
     pass
