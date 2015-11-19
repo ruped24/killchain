@@ -12,7 +12,7 @@ from os import environ
 __author__ = "Rupe"
 __date__ = "June 14 2015"
 __copyright__ = "Linux Professional Training"
-__version__ = "0.1"
+__version__ = "0.2"
 __license__ = "GPL"
 __email__ = "ruped24@gmail.com"
 
