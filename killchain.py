@@ -211,6 +211,7 @@ if __name__ == '__main__':
             call([getoutput(tool['helper'] + ' ' + tool[6])])
             sleep(1)
           if selected is 7:
+            call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[7])])
             sleep(1)
           if selected is 8:
