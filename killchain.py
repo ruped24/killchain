@@ -199,19 +199,19 @@ if __name__ == '__main__':
             load_tables.flush_iptables_rules()
             sleep(1)
           if selected is 3:
-            clall(['clear'])
+            call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[3])])
             sleep(1)
           if selected is 4:
-            clall(['clear'])
+            call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[4])])
             sleep(1)
           if selected is 5:
-            clall(['clear'])
+            call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[5])])
             sleep(1)
           if selected is 6:
-            clall(['clear'])
+            call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[6])])
             sleep(1)
           if selected is 7:
@@ -219,7 +219,7 @@ if __name__ == '__main__':
             call([getoutput(tool['helper'] + ' ' + tool[7])])
             sleep(1)
           if selected is 8:
-            clall(['clear'])
+            call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[8])])
             sleep(5)
         except ValueError:
