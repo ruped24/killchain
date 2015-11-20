@@ -181,7 +181,7 @@ if __name__ == '__main__':
               raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
                         ":> "))
           if selected < 1 or selected > 8:
-            print("Select a number between 1 and 6")
+            print("Select a number between 1 and 8")
             sleep(2)
           if selected is 8:
             exit(0)
