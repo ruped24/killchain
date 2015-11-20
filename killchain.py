@@ -171,7 +171,7 @@ if __name__ == '__main__':
       call(['reset'])
       try:
         c = Colors()
-        print(c.Escape + "[" + repr(randint(92, 93)) + "m" +
+        print(c.Escape + "[" + repr(randint(92, 97)) + "m" +
               Header().headers[randint(1, 3)] + "\n\n")
         who_did_it()
         anon_status()
