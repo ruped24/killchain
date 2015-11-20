@@ -70,7 +70,6 @@ class Tools:
 
 
 class TorIptables(object):
-
   def __init__(self):
     self.tor_config_file = '/etc/tor/torrc'
     self.torrc = '''
