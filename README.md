@@ -1,6 +1,6 @@
 # killchain
 For Kali Linux:
-“Kill Chain” is a unified console that will perform these stages of attacks:
+“Kill Chain” is a unified console with an anonymizer that will perform these stages of attacks:
 Reconnaissance,
 Weaponization,
 Delivery,
