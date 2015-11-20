@@ -15,3 +15,5 @@ Dependant tool sets are:
 2)  OpenVas --  Vulnerability scanning and vulnerability management.
 3)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.
 4)  Websploit -- WebSploit Advanced MITM Framework.
+5)  Metasploit -- Executing exploit code against target.
+6)  WiFite -- Automated wireless auditor, designed for Linux.
