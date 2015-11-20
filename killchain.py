@@ -65,7 +65,8 @@ class Tools:
       3: "setoolkit",
       4: "openvas-setup",
       5: "veil-evasion",
-      6: "websploit"
+      6: "websploit",
+      7: "wifite"
   }
 
 
@@ -128,16 +129,6 @@ def who_did_it():
   print("        {0}".format("#" * 64 + "\n\n"))
 
 
-def anon_status():
-  anon = getoutput("iptables -S -t nat | grep 53")
-  if anon:
-    print("        {0} {1}".format("Anonymizer status",
-                                   c.Escape + c.Lgre + "[ON]\n"))
-  else:
-    print("        {0} {1}".format("Anonymizer status",
-                                   c.Escape + c.Lred + "[OFF]\n"))
-
-
 def main_menu():
   print("        {0}".format(
       c.Escape + c.Lyel +
@@ -152,7 +143,19 @@ def main_menu():
       "5)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.\n"))
   print("        {0}".format(
       "6)  Websploit -- WebSploit Advanced MITM Framework.\n"))
-  print("        {0}".format(c.Escape + c.Lred + "7)  Exit Kill Chain\n"))
+  print("        {0}".format(
+      "7)  WiFite -- Automated wireless auditor, designed for Linux.\n"))
+  print("        {0}".format(c.Escape + c.Lred + "8)  Exit Kill Chain\n"))
+
+
+def anon_status():
+  anon = getoutput("iptables -S -t nat | grep 53")
+  if anon:
+    print("        {0} {1}".format("Anonymizer status",
+                                   c.Escape + c.Lgre + "[ON]\n"))
+  else:
+    print("        {0} {1}".format("Anonymizer status",
+                                   c.Escape + c.Lred + "[OFF]\n"))
 
 
 if __name__ == '__main__':
@@ -177,10 +180,10 @@ if __name__ == '__main__':
           selected = int(
               raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
                         ":> "))
-          if selected < 1 or selected > 7:
+          if selected < 1 or selected > 8:
             print("Select a number between 1 and 6")
             sleep(2)
-          if selected is 7:
+          if selected is 8:
             exit(0)
           if selected is 1:
             if isfile(load_tables.tor_config_file):
@@ -206,8 +209,11 @@ if __name__ == '__main__':
           if selected is 6:
             call([getoutput(tool['helper'] + ' ' + tool[6])])
             sleep(1)
+          if selected is 7:
+            call([getoutput(tool['helper'] + ' ' + tool[7])])
+            sleep(2)
         except ValueError:
-          print("Select a number between 1 and 6")
+          print("Select a number between 1 and 8")
           sleep(2)
       except SystemExit:
         exit(0)
