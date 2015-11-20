@@ -132,7 +132,7 @@ def main_menu():
       c.Escape + c.Lyel +
       "1)  Anonymizer -- Load Tor Iptables rules, route all traffic thru Tor.\n"))
   print("        {0}".format(
-      "2)  Anonymizer -- Flush Tor Iptables rules set to default rules.\n"))
+      "2)  De-Anonymizer -- Flush Tor Iptables rules set to default rules.\n"))
   print("        {0}".format(
       "3)  Set -- Social-Engineer Toolkit (SET), attacks against humans.\n"))
   print("        {0}".format(
