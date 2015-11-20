@@ -9,9 +9,8 @@ from sys import exit, stderr
 from commands import getoutput
 from subprocess import call
 from time import sleep
-from os import environ
+from os import environ, devnull
 from os.path import isfile
-from os import devnull
 
 fnull = open(devnull, 'w')
 
