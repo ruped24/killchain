@@ -212,10 +212,10 @@ if __name__ == '__main__':
             sleep(1)
           if selected is 7:
             call([getoutput(tool['helper'] + ' ' + tool[7])])
-            sleep(5)
+            sleep(1)
           if selected is 8:
             call([getoutput(tool['helper'] + ' ' + tool[8])])
-            sleep(1)
+            sleep(5)
         except ValueError:
           print("Select a number between 1 and 9")
           sleep(2)
