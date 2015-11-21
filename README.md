@@ -19,4 +19,4 @@ Dependant tool sets are:
 6)  Metasploit -- Executing exploit code against target.
 7)  WiFite -- Automated wireless auditor, designed for Linux.
 
-Screenshot: https://drive.google.com/file/d/0B79r4wTVj-CZYTUxMlRLdmN2RGM/view
+Screenshot: http://bit.ly/1I3FR5n
