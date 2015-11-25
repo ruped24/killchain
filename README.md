@@ -1,4 +1,4 @@
-# killchain
+#killchain#
 For Kali Linux2.0:
 “Kill Chain” is a unified console with an anonymizer that will perform these stages of attacks:
 
@@ -16,7 +16,7 @@ Command & Control
 
 And Actions
 
-#Dependant tool sets are:#
+##Dependant tool sets are:##
 
 1)  Tor -- For the console build in anonymizer.
 
