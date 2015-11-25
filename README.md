@@ -1,5 +1,5 @@
 # killchain
-#### For Kali Linux2.0:
+#### For Kali Linux 2.0
 #### “Kill Chain” is a unified console with an anonymizer that will perform these stages of attacks:
 
 * Reconnaissance
