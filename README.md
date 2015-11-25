@@ -16,7 +16,7 @@ Command & Control
 
 And Actions
 
-*Dependant tool sets are:*
+#Dependant tool sets are:#
 
 1)  Tor -- For the console build in anonymizer.
 
