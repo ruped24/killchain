@@ -2,19 +2,19 @@
 For Kali Linux2.0:
 “Kill Chain” is a unified console with an anonymizer that will perform these stages of attacks:
 
-Reconnaissance,
+Reconnaissance
 
-Weaponization,
+Weaponization
 
-Delivery,
+Delivery
 
-Exploit,
+Exploit
 
-Installation,
+Installation
 
-Command & Control, 
+Command & Control 
 
-and Actions
+And Actions
 
 Dependant tool sets are:
 
