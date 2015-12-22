@@ -4,7 +4,7 @@
 from __future__ import print_function
 from random import randint
 from socket import gethostname
-from sys import exit, stderr
+from sys import exit, stdout, stderr
 from commands import getoutput
 from subprocess import call
 from time import sleep
@@ -70,6 +70,7 @@ class Tools:
 
 
 class TorIptables(object):
+
   def __init__(self):
     self.tor_config_file = '/etc/tor/torrc'
     self.torrc = '''
@@ -97,8 +98,8 @@ DNSPort 53
           "-j", "REDIRECT", "--to-ports", "53"])
 
     for net in self.non_tor:
-      call(["iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % net,
-            "-j", "RETURN"])
+      call(["iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % net, "-j",
+            "RETURN"])
 
     call(["iptables", "-t", "nat", "-A", "OUTPUT", "-p", "tcp", "--syn", "-j",
           "REDIRECT", "--to-ports", "%s" % self.trans_port])
@@ -114,15 +115,15 @@ DNSPort 53
     call(["iptables", "-A", "OUTPUT", "-j", "REJECT"])
 
     # Restart Tor
-    call(["service", "tor", "restart"], stderr=fnull)
+    call(["service", "tor", "restart"], stdout=fnull, stderr=fnull)
 
 
 def who_did_it():
   print("        {0}".format("#" * 64))
   print("        {0}".format("Created by: %s." % __copyright__))
   print("        {0}".format("For training purposes only."))
-  print("        {0}, {1}".format("Version %s" % __version__,
-                                  "License %s" % __license__))
+  print("        {0}, {1}".format("Version %s" % __version__, "License %s" %
+                                  __license__))
   print("        {0}".format("Written by: %s" % __author__))
   print("        {0}".format("#" * 64 + "\n\n"))
 
