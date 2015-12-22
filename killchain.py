@@ -122,7 +122,7 @@ def who_did_it():
   print("        {0}".format("Created by: %s." % __copyright__))
   print("        {0}".format("For training purposes only."))
   print("        {0}, {1}".format("Version %s" % __version__, "License %s" %
-                                  __license__))
+                                                 __license__))
   print("        {0}".format("Written by: %s" % __author__))
   print("        {0}".format("#" * 64 + "\n\n"))
 
