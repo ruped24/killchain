@@ -85,7 +85,7 @@ DNSPort 53
     self.trans_port = "9040"  # Tor port
 
   def flush_iptables_rules(self):
-    call(["iptables", '-F'])
+    call(["iptables", "-F"])
     call(["iptables", "-t", "nat", "-F"])
 
   def load_iptables_rules(self):
@@ -107,7 +107,7 @@ DNSPort 53
     call(["iptables", "-A", "OUTPUT", "-m", "state", "--state",
           "ESTABLISHED,RELATED", "-j", "ACCEPT"])
 
-    for net in (self.non_tor):
+    for net in self.non_tor:
       call(["iptables", "-A", "OUTPUT", "-d", "%s" % net, "-j", "ACCEPT"])
 
     call(["iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner", "%s" %
