@@ -2,7 +2,6 @@
 #
 
 from __future__ import print_function
-from __future__ import absolute_import
 from random import randint
 from socket import gethostname
 from sys import exit, stderr
