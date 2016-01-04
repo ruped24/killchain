@@ -9,7 +9,7 @@ from commands import getoutput
 from subprocess import call
 from time import sleep
 from os import environ, devnull
-from os.path import isfile
+from os.path import isfile, basename
 
 fnull = open(devnull, 'w')
 
@@ -71,17 +71,20 @@ class Tools:
 
 class TorIptables(object):
   def __init__(self):
-    self.tor_config_file = '/etc/tor/torrc'
-    self.torrc = '''
-VirtualAddrNetwork 10.0.0.0/10
-AutomapHostsOnResolve 1
-TransPort 9040
-DNSPort 53
-'''
+    self.virtual_net = "10.0.0.0/10"
     self.non_tor_net = ["192.168.0.0/16", "172.16.0.0/12"]
     self.non_tor = ["127.0.0.0/9", "127.128.0.0/10", "127.0.0.0/8"]
     self.tor_uid = getoutput("id -ur debian-tor")  # Tor user uid
     self.trans_port = "9040"  # Tor port
+    self.tor_config_file = '/etc/tor/torrc'
+    self.torrc = '''
+## Inserted by %s for tor iptables rules set
+## Transparently route all traffic thru tor on port %s
+VirtualAddrNetwork %s
+AutomapHostsOnResolve 1
+TransPort %s
+DNSPort 53
+''' % (basename(__file__), self.trans_port, self.virtual_net, self.trans_port)
 
   def flush_iptables_rules(self):
     call(["iptables", "-F"])
