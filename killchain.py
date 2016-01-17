@@ -92,7 +92,8 @@ DNSPort 53
 
   def load_iptables_rules(self):
     self.flush_iptables_rules()
-    self.non_tor.extend(self.non_tor_net)
+    if self.non_tor_net[0] not in self.non_tor:
+      self.non_tor.extend(self.non_tor_net)
 
     call(["iptables", "-t", "nat", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
           "%s" % self.tor_uid, "-j", "RETURN"])
