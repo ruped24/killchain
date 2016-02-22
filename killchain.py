@@ -10,7 +10,9 @@ from subprocess import call
 from time import sleep
 from os import environ, devnull
 from os.path import isfile, basename
+import sys
 
+sys.tracebacklimit = 0
 fnull = open(devnull, 'w')
 
 __author__ = "Rupe"
