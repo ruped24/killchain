@@ -35,4 +35,3 @@
 ###### Screenshot: 
 http://bit.ly/1I3FR5n
 
-####Changelog: See History 8-07-2016
