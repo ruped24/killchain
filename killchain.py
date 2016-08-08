@@ -72,21 +72,25 @@ class Tools:
 
 
 class TorIptables(object):
+
   def __init__(self):
+    self.local_dnsport = "53"  # DNSPort
     self.virtual_net = "10.0.0.0/10"
+    self.local_loopback = "127.0.0.1"  # Local loopback
     self.non_tor_net = ["192.168.0.0/16", "172.16.0.0/12"]
     self.non_tor = ["127.0.0.0/9", "127.128.0.0/10", "127.0.0.0/8"]
     self.tor_uid = getoutput("id -ur debian-tor")  # Tor user uid
     self.trans_port = "9040"  # Tor port
     self.tor_config_file = '/etc/tor/torrc'
-    self.torrc = '''
+    self.torrc = r'''
 ## Inserted by %s for tor iptables rules set
 ## Transparently route all traffic thru tor on port %s
 VirtualAddrNetwork %s
 AutomapHostsOnResolve 1
 TransPort %s
-DNSPort 53
-''' % (basename(__file__), self.trans_port, self.virtual_net, self.trans_port)
+DNSPort %s
+''' % (basename(__file__), self.trans_port, self.virtual_net,
+       self.trans_port, self.local_dnsport)
 
   def flush_iptables_rules(self):
     call(["iptables", "-F"])
@@ -97,10 +101,19 @@ DNSPort 53
     if self.non_tor_net[0] not in self.non_tor:
       self.non_tor.extend(self.non_tor_net)
 
+    # See https://trac.torproject.org/projects/tor/wiki/doc/TransparentProxy#WARNING
+    # See https://lists.torproject.org/pipermail/tor-talk/2014-March/032503.html
+    call(["iptables", "-I", "OUTPUT", "!", "-o", "lo", "!", "-d",
+          self.local_loopback, "!", "-s", self.local_loopback, "-p", "tcp",
+          "-m", "tcp", "--tcp-flags", "ACK,FIN", "ACK,FIN", "-j", "DROP"])
+    call(["iptables", "-I", "OUTPUT", "!", "-o", "lo", "!", "-d",
+          self.local_loopback, "!", "-s", self.local_loopback, "-p", "tcp",
+          "-m", "tcp", "--tcp-flags", "ACK,RST", "ACK,RST", "-j", "DROP"])
+
     call(["iptables", "-t", "nat", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
           "%s" % self.tor_uid, "-j", "RETURN"])
-    call(["iptables", "-t", "nat", "-A", "OUTPUT", "-p", "udp", "--dport", "53",
-          "-j", "REDIRECT", "--to-ports", "53"])
+    call(["iptables", "-t", "nat", "-A", "OUTPUT", "-p", "udp", "--dport",
+          self.local_dnsport, "-j", "REDIRECT", "--to-ports", self.local_dnsport])
 
     for net in self.non_tor:
       call(["iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % net, "-j",
@@ -128,7 +141,7 @@ def who_did_it():
   print("        {0}".format("Created by: %s." % __copyright__))
   print("        {0}".format("For training purposes only."))
   print("        {0}, {1}".format("Version %s" % __version__, "License %s" %
-                                                 __license__))
+                                               __license__))
   print("        {0}".format("Written by: %s" % __author__))
   print("        {0}".format("#" * 64 + "\n\n"))
 
@@ -176,16 +189,16 @@ if __name__ == '__main__':
       call(['reset'])
       try:
         c = Colors()
-        print(c.Escape + "[" + repr(randint(92, 97)) + "m" +
-              Header().headers[randint(1, 3)] + "\n\n")
+        print(c.Escape + "[" + repr(randint(92, 97)) + "m" + Header().headers[
+            randint(1, 3)] + "\n\n")
         who_did_it()
         anon_status()
         main_menu()
         try:
           tool = Tools().tool
-          selected = int(
-              raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
-                        ":> "))
+          selected = int(raw_input(c.Escape + c.Lgre + gethostname(
+          ) + "-gOtr00t"
+                                   ":> "))
           if selected < 1 or selected > 9:
             print("Select a number between 1 and 9")
             sleep(2)
