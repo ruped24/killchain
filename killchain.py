@@ -72,7 +72,6 @@ class Tools:
 
 
 class TorIptables(object):
-
   def __init__(self):
     self.local_dnsport = "53"  # DNSPort
     self.virtual_net = "10.0.0.0/10"  # VirtualAddrNetwork
