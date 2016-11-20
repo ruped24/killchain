@@ -18,7 +18,7 @@ fnull = open(devnull, 'w')
 __author__ = "Rupe"
 __date__ = "June 14 2015"
 __copyright__ = "Linux Professional Training"
-__version__ = "0.2"
+__version__ = "0.3"
 __license__ = "GPL"
 __email__ = "ruped24@gmail.com"
 
@@ -72,6 +72,7 @@ class Tools:
 
 
 class TorIptables(object):
+
   def __init__(self):
     self.local_dnsport = "53"  # DNSPort
     self.virtual_net = "10.0.0.0/10"  # VirtualAddrNetwork
@@ -112,7 +113,8 @@ DNSPort %s
     call(["iptables", "-t", "nat", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
           "%s" % self.tor_uid, "-j", "RETURN"])
     call(["iptables", "-t", "nat", "-A", "OUTPUT", "-p", "udp", "--dport",
-          self.local_dnsport, "-j", "REDIRECT", "--to-ports", self.local_dnsport])
+          self.local_dnsport, "-j", "REDIRECT", "--to-ports",
+          self.local_dnsport])
 
     for net in self.non_tor:
       call(["iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % net, "-j",
@@ -127,8 +129,8 @@ DNSPort %s
     for net in self.non_tor:
       call(["iptables", "-A", "OUTPUT", "-d", "%s" % net, "-j", "ACCEPT"])
 
-    call(["iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner", "%s" %
-          self.tor_uid, "-j", "ACCEPT"])
+    call(["iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
+          "%s" % self.tor_uid, "-j", "ACCEPT"])
     call(["iptables", "-A", "OUTPUT", "-j", "REJECT"])
 
     # Restart Tor
@@ -140,7 +142,7 @@ def who_did_it():
   print("        {0}".format("Created by: %s." % __copyright__))
   print("        {0}".format("For training purposes only."))
   print("        {0}, {1}".format("Version %s" % __version__, "License %s" %
-                                               __license__))
+                                  __license__))
   print("        {0}".format("Written by: %s" % __author__))
   print("        {0}".format("#" * 64 + "\n\n"))
 
@@ -154,7 +156,7 @@ def main_menu():
   print("        {0}".format(
       "3)  Set -- Social-Engineer Toolkit (SET), attacks against humans.\n"))
   print("        {0}".format(
-      "4)  OpenVas --  Vulnerability scanning and vulnerability management.\n"))
+      "4)  OpenVas -- Vulnerability scanning and vulnerability management.\n"))
   print("        {0}".format(
       "5)  Veil-Evasion -- Generate metasploit payloads bypass anti-virus.\n"))
   print("        {0}".format(
@@ -169,11 +171,13 @@ def main_menu():
 def anon_status():
   anon = getoutput("iptables -S -t nat | grep 53")
   if anon:
-    print("        {0} {1}".format("Anonymizer status",
-                                   c.Escape + c.Lgre + "[ON]\n"))
+    print("        {0} {1}".format("Anonymizer status", c.Escape + c.Lgre +
+                                   "[ ON ] -=[ LAN IP: " + "%s ]=-\n" % (
+                                       getoutput('hostname -I').split()[0])))
   else:
-    print("        {0} {1}".format("Anonymizer status",
-                                   c.Escape + c.Lred + "[OFF]\n"))
+    print("        {0} {1}".format("Anonymizer status", c.Escape + c.Lred +
+                                   "[ OFF ] -=[ LAN IP: " + "%s ]=-\n" % (
+                                       getoutput('hostname -I').split()[0])))
 
 
 if __name__ == '__main__':
@@ -196,8 +200,8 @@ if __name__ == '__main__':
         try:
           tool = Tools().tool
           selected = int(
-            raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
-                      ":> "))
+              raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
+                        ":> "))
           if selected < 1 or selected > 9:
             print("Select a number between 1 and 9")
             sleep(2)
