@@ -1,6 +1,8 @@
 # killchain
-#### For Kali Linux 2.0
+
 #### “Kill Chain” is a unified console with an anonymizer that will perform these stages of attacks:
+
+### [Screenshot](http://bit.ly/1I3FR5n)
 
 * Reconnaissance
 
@@ -32,4 +34,3 @@
 
 7)  WiFite -- Automated wireless auditor, designed for Linux.
 
-### [Screenshot](http://bit.ly/1I3FR5n)
