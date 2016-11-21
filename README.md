@@ -16,6 +16,8 @@
 
 * And Actions
 
+___
+
 #### Dependant tool sets are:##
 
 1)  Tor -- For the console build in anonymizer.
@@ -31,6 +33,8 @@
 6)  Metasploit -- Executing exploit code against target.
 
 7)  WiFite -- Automated wireless auditor, designed for Linux.
+
+___
 
 ### [Screenshot](http://bit.ly/1I3FR5n)
 
