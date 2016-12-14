@@ -199,9 +199,8 @@ if __name__ == '__main__':
         main_menu()
         try:
           tool = Tools().tool
-          selected = int(raw_input(c.Escape + c.Lgre + gethostname(
-          ) + "-gOtr00t"
-                                   ":> "))
+          selected = int(raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
+                         ":> "))
           if selected < 1 or selected > 9:
             print("Select a number between 1 and 9")
             sleep(2)
