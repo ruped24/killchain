@@ -7,7 +7,7 @@ from socket import gethostname
 from sys import exit, stdout, stderr
 from commands import getoutput
 from subprocess import call
-from time import sleep
+from time import sleep, asctime
 from os import environ, devnull
 from os.path import isfile, basename
 import sys
@@ -18,7 +18,7 @@ fnull = open(devnull, 'w')
 __author__ = "Rupe"
 __date__ = "June 14 2015"
 __copyright__ = "Linux Professional Training"
-__version__ = "0.3"
+__version__ = "0.3.1"
 __license__ = "GPL"
 __email__ = "ruped24@gmail.com"
 
@@ -89,8 +89,8 @@ VirtualAddrNetwork %s
 AutomapHostsOnResolve 1
 TransPort %s
 DNSPort %s
-''' % (basename(__file__), self.trans_port, self.virtual_net,
-       self.trans_port, self.local_dnsport)
+''' % (basename(__file__), self.trans_port,
+       self.virtual_net, self.trans_port, self.local_dnsport)
 
   def flush_iptables_rules(self):
     call(["iptables", "-F"])
@@ -113,8 +113,7 @@ DNSPort %s
     call(["iptables", "-t", "nat", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
           "%s" % self.tor_uid, "-j", "RETURN"])
     call(["iptables", "-t", "nat", "-A", "OUTPUT", "-p", "udp", "--dport",
-          self.local_dnsport, "-j", "REDIRECT", "--to-ports",
-          self.local_dnsport])
+          self.local_dnsport, "-j", "REDIRECT", "--to-ports", self.local_dnsport])
 
     for net in self.non_tor:
       call(["iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % net, "-j",
@@ -129,8 +128,8 @@ DNSPort %s
     for net in self.non_tor:
       call(["iptables", "-A", "OUTPUT", "-d", "%s" % net, "-j", "ACCEPT"])
 
-    call(["iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
-          "%s" % self.tor_uid, "-j", "ACCEPT"])
+    call(["iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner", "%s" %
+          self.tor_uid, "-j", "ACCEPT"])
     call(["iptables", "-A", "OUTPUT", "-j", "REJECT"])
 
     # Restart Tor
@@ -144,7 +143,8 @@ def who_did_it():
   print("        {0}, {1}".format("Version %s" % __version__, "License %s" %
                                                  __license__))
   print("        {0}".format("Written by: %s" % __author__))
-  print("        {0}".format("#" * 64 + "\n\n"))
+  print("        {0}{1}{2}{3}".format("#" * 18, "[ " + asctime() + " ]", "#" *
+                                      18, "\n\n"))
 
 
 def main_menu():
@@ -199,9 +199,9 @@ if __name__ == '__main__':
         main_menu()
         try:
           tool = Tools().tool
-          selected = int(
-              raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
-                        ":> "))
+          selected = int(raw_input(c.Escape + c.Lgre + gethostname(
+          ) + "-gOtr00t"
+                                   ":> "))
           if selected < 1 or selected > 9:
             print("Select a number between 1 and 9")
             sleep(2)
