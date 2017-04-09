@@ -18,7 +18,7 @@
 
 ___
 
-#### Dependant tool sets are:##
+#### Dependant tool sets are: ##
 
 1)  Tor -- For the console build-in [anonymizer](https://github.com/ruped24/toriptables2).
 
