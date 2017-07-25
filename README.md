@@ -42,4 +42,4 @@ ___
 
 ### [killchain Add-ons](https://github.com/ruped24/tor_ip_switcher)
 
-### [Skid Tools and Kill Chain Installation Video](https://www.youtube.com/watch?v=B2HH8ueiWxE)
+### [Skid Tools and killchain Installation Video](https://www.youtube.com/watch?v=B2HH8ueiWxE)
