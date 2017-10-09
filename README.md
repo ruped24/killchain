@@ -36,7 +36,7 @@ ___
 
 ___
 
-### [Screenshot](http://bit.ly/1I3FR5n)
+### [Screenshot](https://drive.google.com/open?id=0B79r4wTVj-CZYTUxMlRLdmN2RGM)
 
 ### [killchain Setup](https://github.com/ruped24/killchain/wiki/Kill-Chain-Setup)
 
