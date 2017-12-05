@@ -41,3 +41,5 @@ ___
 ### [killchain Setup](https://github.com/ruped24/killchain/wiki/Kill-Chain-Setup)
 
 ### [killchain Add-on](https://github.com/ruped24/tor_ip_switcher)
+
+### [Troubleshooting](https://github.com/ruped24/killchain/wiki/Troubleshooting)
