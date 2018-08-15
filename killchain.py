@@ -176,8 +176,7 @@ def who_did_it():
 def main_menu():
   print("        {0}".format(
       c.Escape + c.Lyel +
-      "1)  Anonymizer -- Load Tor Iptables rules, route all traffic thru Tor.\n"
-  ))
+      "1)  Anonymizer -- Load Tor Iptables rules, route all traffic thru Tor.\n"))
   print("        {0}".format(
       "2)  De-Anonymizer -- Flush Tor Iptables rules set to default rules.\n"))
   print("        {0}".format(
