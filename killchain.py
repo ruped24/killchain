@@ -68,7 +68,7 @@ class Tools:
       'helper': 'which',
       3: "setoolkit",
       4: "openvas-setup",
-      5: "veil-evasion",
+      5: "veil",
       6: "websploit",
       7: "msfdb",
       8: "wifite"
