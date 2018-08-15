@@ -33,7 +33,8 @@ class Colors:
 
 class Header:
   headers = {
-      1: r"""
+      1:
+          r"""
          **   ** **  **  **         ******  **                **
         /**  ** //  /** /**        **////**/**               //
         /** **   ** /** /**       **    // /**       ******   ** *******
@@ -42,13 +43,15 @@ class Header:
         /**//** /** /** /**      //**    **/**  /** **////** /** /**  /**
         /** //**/** *** ***       //****** /**  /**//********/** ***  /**
         //   // // /// ///         //////  //   //  //////// // ///   //   """,
-      2: r"""
+      2:
+          r"""
         KK  KK iii lll lll     CCCCC  hh              iii
         KK KK      lll lll    CC    C hh        aa aa     nn nnn
         KKKK   iii lll lll    CC      hhhhhh   aa aaa iii nnn  nn
         KK KK  iii lll lll    CC    C hh   hh aa  aaa iii nn   nn
         KK  KK iii lll lll     CCCCC  hh   hh  aaa aa iii nn   nn  """,
-      3: r"""
+      3:
+          r"""
         $$\   $$\ $$\ $$\ $$\        $$$$$$\  $$\                 $$\
         $$ | $$  |\__|$$ |$$ |      $$  __$$\ $$ |                \__|
         $$ |$$  / $$\ $$ |$$ |      $$ /  \__|$$$$$$$\   $$$$$$\  $$\ $$$$$$$\
@@ -65,7 +68,7 @@ class Tools:
       'helper': 'which',
       3: "setoolkit",
       4: "openvas-setup",
-      5: "veil",
+      5: "veil-evasion",
       6: "websploit",
       7: "msfdb",
       8: "wifite"
@@ -93,7 +96,8 @@ DNSPort %s
 ''' % (basename(__file__), self.trans_port, self.virtual_net, self.trans_port,
        self.local_dnsport)
 
-  def get_public_ip(self):
+  @staticmethod
+  def get_public_ip():
     my_public_ip = getoutput('curl ipinfo.io/ip')
     return ''.join(my_public_ip.split()[-1:])
 
@@ -130,13 +134,14 @@ DNSPort %s
 
     for net in self.non_tor:
       call([
-          "iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % net, "-j",
-          "RETURN"
+          "iptables", "-t", "nat", "-A", "OUTPUT", "-d",
+          "%s" % net, "-j", "RETURN"
       ])
 
     call([
         "iptables", "-t", "nat", "-A", "OUTPUT", "-p", "tcp", "--syn", "-j",
-        "REDIRECT", "--to-ports", "%s" % self.trans_port
+        "REDIRECT", "--to-ports",
+        "%s" % self.trans_port
     ])
 
     call([
@@ -161,17 +166,18 @@ def who_did_it():
   print("        {0}".format("#" * 64))
   print("        {0}".format("Created by: %s." % __copyright__))
   print("        {0}".format("For training purposes only."))
-  print("        {0}, {1}".format("Version %s" % __version__, "License %s" %
-                                                 __license__))
+  print("        {0}, {1}".format("Version %s" % __version__,
+                                  "License %s" % __license__))
   print("        {0}".format("Written by: %s" % __author__))
-  print("        {0}{1}{2}{3}".format("#" * 18, "[ " + asctime() + " ]", "#" *
-                                      18, "\n\n"))
+  print("        {0}{1}{2}{3}".format("#" * 18, "[ " + asctime() + " ]",
+                                      "#" * 18, "\n\n"))
 
 
 def main_menu():
   print("        {0}".format(
       c.Escape + c.Lyel +
-      "1)  Anonymizer -- Load Tor Iptables rules, route all traffic thru Tor.\n"))
+      "1)  Anonymizer -- Load Tor Iptables rules, route all traffic thru Tor.\n"
+  ))
   print("        {0}".format(
       "2)  De-Anonymizer -- Flush Tor Iptables rules set to default rules.\n"))
   print("        {0}".format(
@@ -192,13 +198,15 @@ def main_menu():
 def anon_status():
   anon = getoutput("iptables -S -t nat | grep 53")
   if anon:
-    print("        {0} {1}".format("Anonymizer status", c.Escape + c.Lgre +
-                                   "[ ON ] -=[ WAN IP: " + "%s ]=-\n" % (
-                                       TorIptables().get_public_ip())))
+    print("        {0} {1}".format(
+        "Anonymizer status",
+        c.Escape + c.Lgre + "[ ON ] -=[ WAN IP: " + "%s ]=-\n" %
+        (TorIptables().get_public_ip())))
   else:
-    print("        {0} {1}".format("Anonymizer status", c.Escape + c.Lred +
-                                   "[ OFF ] -=[ LAN IP: " + "%s ]=-\n" % (
-                                       getoutput('hostname -I').split()[0])))
+    print("        {0} {1}".format(
+        "Anonymizer status",
+        c.Escape + c.Lred + "[ OFF ] -=[ LAN IP: " + "%s ]=-\n" %
+        (getoutput('hostname -I').split()[0])))
 
 
 if __name__ == '__main__':
@@ -213,8 +221,8 @@ if __name__ == '__main__':
       call(['reset'])
       try:
         c = Colors()
-        print(c.Escape + "[" + repr(randint(92, 97)) + "m" + Header().headers[
-            randint(1, 3)] + "\n\n")
+        print(c.Escape + "[" + repr(randint(92, 97)) + "m" +
+              Header().headers[randint(1, 3)] + "\n\n")
         who_did_it()
         anon_status()
         main_menu()
