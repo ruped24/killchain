@@ -2,25 +2,26 @@
 #
 
 from __future__ import print_function
+
+import sys
+from commands import getoutput
+from os import devnull, environ
+from os.path import basename, isfile
 from random import randint
 from socket import gethostname
-from sys import exit, stdout, stderr
-from commands import getoutput
 from subprocess import call
-from time import sleep, asctime
-from os import environ, devnull
-from os.path import isfile, basename
-import sys
-
-sys.tracebacklimit = 0
-fnull = open(devnull, 'w')
+from sys import exit, stderr, stdout
+from time import asctime, sleep
 
 __author__ = "Rupe"
 __date__ = "June 14 2015"
 __copyright__ = "Linux Professional Training"
-__version__ = "0.3.1"
+__version__ = "0.3.3"
 __license__ = "GPL"
 __email__ = "ruped24@gmail.com"
+
+sys.tracebacklimit = 0
+fnull = open(devnull, 'w')
 
 
 class Colors:
@@ -64,9 +65,9 @@ class Tools:
       'helper': 'which',
       3: "setoolkit",
       4: "openvas-setup",
-      5: "veil-evasion",
+      5: "veil",
       6: "websploit",
-      7: "msfconsole",
+      7: "msfdb",
       8: "wifite"
   }
 
@@ -89,8 +90,12 @@ VirtualAddrNetwork %s
 AutomapHostsOnResolve 1
 TransPort %s
 DNSPort %s
-''' % (basename(__file__), self.trans_port,
-       self.virtual_net, self.trans_port, self.local_dnsport)
+''' % (basename(__file__), self.trans_port, self.virtual_net, self.trans_port,
+       self.local_dnsport)
+
+  def get_public_ip(self):
+    my_public_ip = getoutput('curl ipinfo.io/ip')
+    return ''.join(my_public_ip.split()[-1:])
 
   def flush_iptables_rules(self):
     call(["iptables", "-F"])
@@ -103,33 +108,49 @@ DNSPort %s
 
     # See https://trac.torproject.org/projects/tor/wiki/doc/TransparentProxy#WARNING
     # See https://lists.torproject.org/pipermail/tor-talk/2014-March/032503.html
-    call(["iptables", "-I", "OUTPUT", "!", "-o", "lo", "!", "-d",
-          self.local_loopback, "!", "-s", self.local_loopback, "-p", "tcp",
-          "-m", "tcp", "--tcp-flags", "ACK,FIN", "ACK,FIN", "-j", "DROP"])
-    call(["iptables", "-I", "OUTPUT", "!", "-o", "lo", "!", "-d",
-          self.local_loopback, "!", "-s", self.local_loopback, "-p", "tcp",
-          "-m", "tcp", "--tcp-flags", "ACK,RST", "ACK,RST", "-j", "DROP"])
+    call([
+        "iptables", "-I", "OUTPUT", "!", "-o", "lo", "!", "-d",
+        self.local_loopback, "!", "-s", self.local_loopback, "-p", "tcp", "-m",
+        "tcp", "--tcp-flags", "ACK,FIN", "ACK,FIN", "-j", "DROP"
+    ])
+    call([
+        "iptables", "-I", "OUTPUT", "!", "-o", "lo", "!", "-d",
+        self.local_loopback, "!", "-s", self.local_loopback, "-p", "tcp", "-m",
+        "tcp", "--tcp-flags", "ACK,RST", "ACK,RST", "-j", "DROP"
+    ])
 
-    call(["iptables", "-t", "nat", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
-          "%s" % self.tor_uid, "-j", "RETURN"])
-    call(["iptables", "-t", "nat", "-A", "OUTPUT", "-p", "udp", "--dport",
-          self.local_dnsport, "-j", "REDIRECT", "--to-ports", self.local_dnsport])
+    call([
+        "iptables", "-t", "nat", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
+        "%s" % self.tor_uid, "-j", "RETURN"
+    ])
+    call([
+        "iptables", "-t", "nat", "-A", "OUTPUT", "-p", "udp", "--dport",
+        self.local_dnsport, "-j", "REDIRECT", "--to-ports", self.local_dnsport
+    ])
 
     for net in self.non_tor:
-      call(["iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % net, "-j",
-            "RETURN"])
+      call([
+          "iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % net, "-j",
+          "RETURN"
+      ])
 
-    call(["iptables", "-t", "nat", "-A", "OUTPUT", "-p", "tcp", "--syn", "-j",
-          "REDIRECT", "--to-ports", "%s" % self.trans_port])
+    call([
+        "iptables", "-t", "nat", "-A", "OUTPUT", "-p", "tcp", "--syn", "-j",
+        "REDIRECT", "--to-ports", "%s" % self.trans_port
+    ])
 
-    call(["iptables", "-A", "OUTPUT", "-m", "state", "--state",
-          "ESTABLISHED,RELATED", "-j", "ACCEPT"])
+    call([
+        "iptables", "-A", "OUTPUT", "-m", "state", "--state",
+        "ESTABLISHED,RELATED", "-j", "ACCEPT"
+    ])
 
     for net in self.non_tor:
       call(["iptables", "-A", "OUTPUT", "-d", "%s" % net, "-j", "ACCEPT"])
 
-    call(["iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner", "%s" %
-          self.tor_uid, "-j", "ACCEPT"])
+    call([
+        "iptables", "-A", "OUTPUT", "-m", "owner", "--uid-owner",
+        "%s" % self.tor_uid, "-j", "ACCEPT"
+    ])
     call(["iptables", "-A", "OUTPUT", "-j", "REJECT"])
 
     # Restart Tor
@@ -172,8 +193,8 @@ def anon_status():
   anon = getoutput("iptables -S -t nat | grep 53")
   if anon:
     print("        {0} {1}".format("Anonymizer status", c.Escape + c.Lgre +
-                                   "[ ON ] -=[ LAN IP: " + "%s ]=-\n" % (
-                                       getoutput('hostname -I').split()[0])))
+                                   "[ ON ] -=[ WAN IP: " + "%s ]=-\n" % (
+                                       TorIptables().get_public_ip())))
   else:
     print("        {0} {1}".format("Anonymizer status", c.Escape + c.Lred +
                                    "[ OFF ] -=[ LAN IP: " + "%s ]=-\n" % (
@@ -199,8 +220,9 @@ if __name__ == '__main__':
         main_menu()
         try:
           tool = Tools().tool
-          selected = int(raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
-                         ":> "))
+          selected = int(
+              raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
+                        ":> "))
           if selected < 1 or selected > 9:
             print("Select a number between 1 and 9")
             sleep(2)
@@ -236,7 +258,7 @@ if __name__ == '__main__':
             sleep(1)
           if selected is 7:
             call(['clear'])
-            call([getoutput(tool['helper'] + ' ' + tool[7])])
+            call([getoutput(tool['helper'] + ' ' + tool[7]), 'run'])
             sleep(1)
           if selected is 8:
             call(['clear'])
