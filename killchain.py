@@ -98,7 +98,7 @@ DNSPort %s
 
   @staticmethod
   def get_public_ip():
-    return ''.join(getoutput('curl ipinfo.io/ip').split()[-1:])
+    return ''.join(getoutput('curl -4s ipinfo.io/ip').split()[-1:])
 
   def flush_iptables_rules(self):
     call(["iptables", "-F"])
@@ -139,8 +139,7 @@ DNSPort %s
 
     call([
         "iptables", "-t", "nat", "-A", "OUTPUT", "-p", "tcp", "--syn", "-j",
-        "REDIRECT", "--to-ports",
-        "%s" % self.trans_port
+        "REDIRECT", "--to-ports", "%s" % self.trans_port
     ])
 
     call([
@@ -197,14 +196,12 @@ def anon_status():
   anon = getoutput("iptables -S -t nat | grep 53")
   if anon:
     print("        {0} {1}".format(
-        "Anonymizer status",
-        c.Escape + c.Lgre + "[ ON ] -=[ WAN IP: " + "%s ]=-\n" %
-        (TorIptables().get_public_ip())))
+        "Anonymizer status", c.Escape + c.Lgre + "[ ON ] -=[ WAN IP: " +
+        "%s ]=-\n" % (TorIptables().get_public_ip())))
   else:
     print("        {0} {1}".format(
-        "Anonymizer status",
-        c.Escape + c.Lred + "[ OFF ] -=[ LAN IP: " + "%s ]=-\n" %
-        (getoutput('hostname -I').split()[0])))
+        "Anonymizer status", c.Escape + c.Lred + "[ OFF ] -=[ LAN IP: " +
+        "%s ]=-\n" % (getoutput('hostname -I').split()[0])))
 
 
 if __name__ == '__main__':
