@@ -133,8 +133,7 @@ DNSPort %s
 
     for net in self.non_tor:
       call([
-          "iptables", "-t", "nat", "-A", "OUTPUT", "-d",
-          "%s" % net, "-j", "RETURN"
+          "iptables", "-t", "nat", "-A", "OUTPUT", "-d", "%s" % net, "-j", "RETURN"
       ])
 
     call([
@@ -193,11 +192,12 @@ def main_menu():
 
 
 def anon_status():
-  anon = getoutput("iptables -S -t nat | grep 53")
+  anon = getoutput(
+      "iptables -S -t nat | grep %s" % TorIptables().local_dnsport)
   if anon:
     print("        {0} {1}".format(
         "Anonymizer status", c.Escape + c.Lgre + "[ ON ] -=[ WAN IP: " +
-        "%s ]=-\n" % (TorIptables().get_public_ip())))
+        "%s ]=-\n" % (TorIptables.get_public_ip())))
   else:
     print("        {0} {1}".format(
         "Anonymizer status", c.Escape + c.Lred + "[ OFF ] -=[ LAN IP: " +
