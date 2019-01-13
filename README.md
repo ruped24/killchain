@@ -1,6 +1,6 @@
 # killchain
 
-![](https://img.shields.io/badge/killchain-python-blue.svg)
+![](https://img.shields.io/badge/killchain-python-blue.svg)![](https://img.shields.io/badge/dependencies-tor_set_openvas_veil_websploit_metasploit_wifite-orange.svg)
 
 #### [“Kill Chain”](https://github.com/ruped24/killchain/wiki/What-is-Kill-Chain%3F) is a unified console with an anonymizer that will perform these stages of attacks:
 
