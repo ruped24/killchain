@@ -40,6 +40,6 @@ ___
 
 ### [Screenshot](https://drive.google.com/open?id=0B79r4wTVj-CZYTUxMlRLdmN2RGM)
 
-### [killchain Setup](https://github.com/ruped24/killchain/wiki/Kill-Chain-Setup)
+### [killchain Setup](https://github.com/ruped24/killchain/wiki/Kill-Chain-Setup#setting-up-your-kill-chain-environment)
 
 ### [killchain Add-on](https://github.com/ruped24/tor_ip_switcher)
