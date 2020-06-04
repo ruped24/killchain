@@ -212,8 +212,8 @@ if __name__ == '__main__':
     raw_input = input
   try:
     while True:
+      call(['reset'])
       stderr.write("\x1b[2J\x1b[H")
-      call(['clear'])
       try:
         c = Colors()
         print(c.Escape + "[" + repr(randint(92, 97)) + "m" +
