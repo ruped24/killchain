@@ -213,7 +213,7 @@ if __name__ == '__main__':
   try:
     while True:
       stderr.write("\x1b[2J\x1b[H")
-      call(['reset'])
+      call(['clear'])
       try:
         c = Colors()
         print(c.Escape + "[" + repr(randint(92, 97)) + "m" +
