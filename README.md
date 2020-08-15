@@ -2,6 +2,8 @@
 
 ![](https://img.shields.io/badge/killchain-python_2.7-blue.svg?style=flat-square) ![](https://img.shields.io/badge/dependencies-tor_set_openvas_veil_websploit_metasploit_wifite-orange.svg?style=flat-square) ![](https://img.shields.io/badge/GPL-v2-blue.svg?style=flat-square) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat-square)](https://github.com/ruped24/killchain/graphs/commit-activity)
 
+---
+
 #### [“Kill Chain”](https://github.com/ruped24/killchain/wiki/What-is-Kill-Chain%3F#what-is-kill-chain) is a unified console with an anonymizer that will perform these stages of attacks:
 
 * Reconnaissance
