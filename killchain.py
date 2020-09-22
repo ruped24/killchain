@@ -1,22 +1,20 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 #
 
-from __future__ import print_function
 
 import sys
-from commands import getoutput
 from os import devnull, environ
 from os.path import basename, isfile
 from random import randint
 from socket import gethostname
-from subprocess import call
+from subprocess import call, getoutput
 from sys import exit, stderr, stdout
 from time import asctime, sleep
 
 __author__ = "Rupe"
 __date__ = "June 14 2015"
 __copyright__ = "Linux Professional Training"
-__version__ = "0.3.3"
+__version__ = "0.3.8"
 __license__ = "GPL"
 __email__ = "ruped24@gmail.com"
 
@@ -75,7 +73,7 @@ class Tools:
   }
 
 
-class TorIptables(object):
+class TorIptables:
 
   def __init__(self):
     self.local_dnsport = "53"  # DNSPort
@@ -207,13 +205,9 @@ def anon_status():
 if __name__ == '__main__':
   load_tables = TorIptables()
   try:
-    raw_input
-  except NameError:
-    raw_input = input
-  try:
     while True:
       call(['reset'])
-      stderr.write("\x1b[2J\x1b[H")
+      call(['clear'])
       try:
         c = Colors()
         print(c.Escape + "[" + repr(randint(92, 97)) + "m" +
@@ -224,14 +218,14 @@ if __name__ == '__main__':
         try:
           tool = Tools().tool
           selected = int(
-              raw_input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
-                        ":> "))
+              input(c.Escape + c.Lgre + gethostname() + "-gOtr00t"
+                       + ":> "))
           if selected < 1 or selected > 9:
             print("Select a number between 1 and 9")
             sleep(2)
-          if selected is 9:
+          if selected == 9:
             exit(0)
-          if selected is 1:
+          if selected == 1:
             if isfile(load_tables.tor_config_file):
               if not 'VirtualAddrNetwork' in open(
                   load_tables.tor_config_file).read():
@@ -240,30 +234,30 @@ if __name__ == '__main__':
             load_tables.load_iptables_rules()
           sleep(1)
 
-          if selected is 2:
+          if selected == 2:
             load_tables.flush_iptables_rules()
             sleep(1)
-          if selected is 3:
+          if selected == 3:
             call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[3])])
             sleep(1)
-          if selected is 4:
+          if selected == 4:
             call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[4])])
             sleep(1)
-          if selected is 5:
+          if selected == 5:
             call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[5])])
             sleep(1)
-          if selected is 6:
+          if selected == 6:
             call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[6])])
             sleep(1)
-          if selected is 7:
+          if selected == 7:
             call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[7]), 'run'])
             sleep(1)
-          if selected is 8:
+          if selected == 8:
             call(['clear'])
             call([getoutput(tool['helper'] + ' ' + tool[8])])
             sleep(5)
@@ -275,7 +269,7 @@ if __name__ == '__main__':
   except OSError as err:
     print("\n [*] Check your path " + c.Escape + c.Lred + "%s\n %s" %
           (environ['PATH'], "[!] " + c.Escape + c.Lyel + "Can't find"),
-          c.Escape + c.Lgre + tool[selected] + ", " + err[1],
+          c.Escape + c.Lgre + tool[selected] + ",", 
           c.Escape + c.Lred + "Aborting!")
     sleep(2)
     pass
