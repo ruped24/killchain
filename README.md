@@ -1,6 +1,6 @@
 # killchain
 
-![](https://img.shields.io/badge/killchain-python_2.7-blue.svg?style=flat-square) ![](https://img.shields.io/badge/dependencies-tor_set_openvas_veil_websploit_metasploit_wifite-orange.svg?style=flat-square) ![](https://img.shields.io/badge/GPL-v2-blue.svg?style=flat-square) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat-square)](https://github.com/ruped24/killchain/graphs/commit-activity)
+![](https://img.shields.io/badge/killchain-python_3.8-blue.svg?style=flat-square) ![](https://img.shields.io/badge/dependencies-tor_set_openvas_veil_websploit_metasploit_wifite-orange.svg?style=flat-square) ![](https://img.shields.io/badge/GPL-v2-blue.svg?style=flat-square) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat-square)](https://github.com/ruped24/killchain/graphs/commit-activity)
 
 ---
 
