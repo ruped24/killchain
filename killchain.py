@@ -65,7 +65,7 @@ class Tools:
   tool = {
       'helper': 'which',
       3: "setoolkit",
-      4: "openvas-setup",
+      4: "gvm-setup",
       5: "veil",
       6: "websploit",
       7: "msfdb",
