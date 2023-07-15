@@ -24,7 +24,7 @@ ___
 
 #### Dependent tool sets are: ##
 
-1)  Tor -- For the console build-in [anonymizer](https://github.com/ruped24/toriptables2).
+1)  Tor -- For the console build-in [Anonymizer](https://github.com/ruped24/toriptables2).
 
 2)  Set -- Social-Engineer Toolkit (SET), attacks against humans.
 
