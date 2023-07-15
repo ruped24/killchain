@@ -10,6 +10,8 @@ from socket import gethostname
 from subprocess import call, getoutput
 from sys import exit, stderr, stdout
 from time import asctime, sleep
+from json import load
+from urllib.request import urlopen
 
 __author__ = "Rupe"
 __date__ = "June 14 2015"
@@ -96,7 +98,7 @@ DNSPort %s
 
   @staticmethod
   def get_public_ip():
-    return ''.join(getoutput('curl -4s ipinfo.io/ip').split()[-1:])
+    return load(urlopen('https://check.torproject.org/api/ip'))['IP']
 
   def flush_iptables_rules(self):
     call(["iptables", "-F"])
